@@ -17,14 +17,14 @@ import java.util.List;
 @Data
 public class Student {
 
-    @NotEmpty(message = "Field can't be left empty")
-    @NotNull(message = "Field can't be left empty")
-    @Size(min=3, max=20, message = "Has to be in 2-20 chars range")
+    @NotEmpty(message = "{validation.name.NotEmpty}")
+    @NotNull(message = "{validation.name.NutNull}")
+    @Size(min=3, max=20, message = "The size of the field should be {min}-{max}")
     private String firstName;
 
-    @NotEmpty(message = "Field can't be left empty")
-    @NotEmpty(message = "Field can't be left empty")
-    @Size(min=3, max=20, message = "Has to be in 2-20 chars range")
+    @NotEmpty(message = "{validation.name.NotEmpty}")
+    @NotNull(message = "{validation.name.NutNull}")
+    @Size(min=3, max=20, message = "The size of the field should be {min}-{max}")
     private String lastName;
 
     private String countryName;
