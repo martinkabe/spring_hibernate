@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Confirmation</title>
+</head>
+<body>
+    <h1>student-confirmation</h1>
+
+    <p>Student first name: <span th:text="${student.getFirstName()}"></span></p>
+    <p>Student last name: <span th:text="${student.getLastName()}"></span></p>
+    <p>Student country: <span th:text="${student.getCountryName()}"></span></p>
+    <p>Student programming language: <span th:text="${student.getLanguageName()}"></span></p>
+    <p>Select Operating System:</p>
+    <ul>
+        <li th:each="os : ${student.getOsName()}" th:text="${os}"></li>
+    </ul>
+    <a href="/">HOME</a>
+</body>
+</html>
