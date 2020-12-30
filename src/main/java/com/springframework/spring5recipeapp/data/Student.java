@@ -1,10 +1,8 @@
 package com.springframework.spring5recipeapp.data;
 
+import com.springframework.spring5recipeapp.utils.PropertyParser;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -12,8 +10,6 @@ import javax.validation.constraints.Size;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-@Component
-@NoArgsConstructor
 @Data
 public class Student {
 
@@ -31,12 +27,7 @@ public class Student {
     private String languageName;
     private List<String> osName;
 
-    @Autowired
     private LinkedHashMap<String, String> countryOptions;
-
-    @Autowired
     private LinkedHashMap<String, String> languageOptions;
-
-    @Autowired
     private List<String> osOptions;
 }

@@ -1,40 +1,25 @@
 package com.springframework.spring5recipeapp.configuration;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.springframework.spring5recipeapp.data.Student;
+import com.springframework.spring5recipeapp.utils.PropertyParser;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.io.IOException;
 
 @Configuration
 public class StudentConfiguration {
 
-    @Value("#{${country}}")
-    private LinkedHashMap<String,String> country;
-
-    @Value("#{${language}}")
-    private LinkedHashMap<String, String> language;
-
-    @Value("#{'${operatingSystem}'.split(',')}")
-    private List<String> operatingSystem;
-
     @Bean
-    public LinkedHashMap<String, String> countryOptions() {
-        return country;
-    }
-
-    @Bean
-    public LinkedHashMap<String, String> languageOptions() {
-        return language;
-    }
-
-    @Bean
-    public List<String> osOptions() {
-        return operatingSystem;
+    public Student student(PropertyParser parser) throws IOException {
+        Student newStudent = new Student();
+        newStudent.setCountryOptions(parser.parse().getCountry());
+        newStudent.setLanguageOptions(parser.parse().getLanguage());
+        newStudent.setOsOptions(parser.parse().getOperatingSystem());
+        return newStudent;
     }
 
     @Bean
