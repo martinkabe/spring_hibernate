@@ -1,8 +1,6 @@
 package com.springframework.spring5recipeapp.data;
 
-import com.springframework.spring5recipeapp.utils.PropertyParser;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

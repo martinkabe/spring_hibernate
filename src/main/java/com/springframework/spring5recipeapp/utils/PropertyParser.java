@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springframework.spring5recipeapp.configuration.FormAttributes;
 import com.springframework.spring5recipeapp.data.Attributes;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -13,8 +12,11 @@ import java.util.LinkedHashMap;
 @Component
 public class PropertyParser {
 
-    @Autowired
-    private FormAttributes formAttributes;
+    private final FormAttributes formAttributes;
+
+    public PropertyParser(FormAttributes formAttributes) {
+        this.formAttributes = formAttributes;
+    }
 
     public Attributes parse() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
