@@ -6,3 +6,8 @@ h1 {
     color: red;
     font-style: italic;
 }
+
+.err-font-style {
+    font-family: "Courier New", fantasy;
+    font-size: 12px;
+}

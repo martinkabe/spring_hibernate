@@ -2,9 +2,12 @@ package com.springframework.spring5recipeapp.controllers;
 
 import com.springframework.spring5recipeapp.data.Student;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +21,12 @@ public class StudentController {
 
     public StudentController(Student student) {
         this.student = student;
+    }
+
+    @InitBinder
+    public void initialBinderForTrimmingSpaces(WebDataBinder webDataBinder) {
+        StringTrimmerEditor stringTrimEditor = new StringTrimmerEditor(true);
+        webDataBinder.registerCustomEditor(String.class, stringTrimEditor);
     }
 
     @RequestMapping(value = "/showForm", method=RequestMethod.GET)

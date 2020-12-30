@@ -1,6 +1,9 @@
 package com.springframework.spring5recipeapp.data;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -11,13 +14,11 @@ import java.util.List;
 @Data
 public class Student {
 
-    @NotEmpty(message = "{validation.name.NotEmpty}")
-    @NotNull(message = "{validation.name.NutNull}")
+    @NotNull(message = "{validation.name.NotNull}")
     @Size(min=3, max=20, message = "The size of the field should be {min}-{max}")
     private String firstName;
 
-    @NotEmpty(message = "{validation.name.NotEmpty}")
-    @NotNull(message = "{validation.name.NutNull}")
+    @NotNull(message = "{validation.name.NotNull}")
     @Size(min=3, max=20, message = "The size of the field should be {min}-{max}")
     private String lastName;
 
