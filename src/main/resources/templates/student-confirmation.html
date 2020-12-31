@@ -5,12 +5,14 @@
     <title>Student Confirmation</title>
 </head>
 <body>
-    <h1>student-confirmation</h1>
+    <h1>Student Confirmation:</h1>
 
-    <p>Student first name: <span th:text="${student.getFirstName()}"></span></p>
-    <p>Student last name: <span th:text="${student.getLastName()}"></span></p>
-    <p>Student country: <span th:text="${student.getCountryName()}"></span></p>
-    <p>Student programming language: <span th:text="${student.getLanguageName()}"></span></p>
+    <p>Student First Name: <span th:text="${student.getFirstName()}"></span></p>
+    <p>Student Last Name: <span th:text="${student.getLastName()}"></span></p>
+    <p>Student Age: <span th:text="${student.getAge()}"></span></p>
+    <p>Student Postal Code: <span th:text="${student.getPostalCode()}"></span></p>
+    <p>Student Country: <span th:text="${student.getCountryName()}"></span></p>
+    <p>Student Programming Language: <span th:text="${student.getLanguageName()}"></span></p>
     <p>Select Operating System:</p>
     <ul>
         <li th:each="os : ${student.getOsName()}" th:text="${os}"></li>

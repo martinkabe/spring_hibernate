@@ -1,6 +1,8 @@
 package com.springframework.spring5recipeapp.controllers;
 
 import com.springframework.spring5recipeapp.data.Student;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,9 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/student")
 public class StudentController {
+
+    private final Logger log = LoggerFactory.getLogger(StudentController.class);
+
     private final Student student;
 
     public StudentController(Student student) {
@@ -39,6 +44,7 @@ public class StudentController {
     public String processForm(@Valid @ModelAttribute("student") Student theStudent,
                               BindingResult theBindingResult,
                               Model model) {
+        log.info("BindingResult: {}", theBindingResult);
         if (theBindingResult.hasErrors()) {
             BeanUtils.copyProperties(student, theStudent);
             model.addAttribute("student", theStudent);

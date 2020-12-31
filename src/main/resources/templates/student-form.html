@@ -10,16 +10,28 @@
     <form th:action="@{/student/processForm}" th:object="${student}" method="post">
         <table>
             <tr>
-                <td th:class="${#fields.hasErrors('firstName')}? 'error err-font-style'">First Name:</td>
+                <td th:class="${#fields.hasErrors('firstName')}? 'error err-font-style'">First Name (*):</td>
                 <td><input type="text" th:field="*{firstName}" autocomplete="off" placeholder="First Name"/></td>
                 <td th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
                     th:class="${#fields.hasErrors('firstName')}? 'error err-font-style'"></td>
             </tr>
             <tr>
-                <td th:class="${#fields.hasErrors('lastName')}? 'error err-font-style'">Last Name:</td>
+                <td th:class="${#fields.hasErrors('lastName')}? 'error err-font-style'">Last Name (*):</td>
                 <td><input type="text" th:field="*{lastName}" autocomplete="off" placeholder="Last Name"/></td>
                 <td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
                     th:class="${#fields.hasErrors('lastName')}? 'error err-font-style'"></td>
+            </tr>
+            <tr>
+                <td th:class="${#fields.hasErrors('age')}? 'error err-font-style'">Age (*):</td>
+                <td><input type="text" th:field="*{age}" autocomplete="off" placeholder="Age"/></td>
+                <td th:if="${#fields.hasErrors('age')}" th:errors="*{age}"
+                    th:class="${#fields.hasErrors('age')}? 'error err-font-style'"></td>
+            </tr>
+            <tr>
+                <td th:class="${#fields.hasErrors('postalCode')}? 'error err-font-style'">Postal Code (*):</td>
+                <td><input type="text" th:field="*{postalCode}" autocomplete="off" placeholder="Postal Code"/></td>
+                <td th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}"
+                    th:class="${#fields.hasErrors('postalCode')}? 'error err-font-style'"></td>
             </tr>
             <tr>
                 <td>Country Name:</td>
