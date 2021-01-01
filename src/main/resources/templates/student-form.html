@@ -34,6 +34,12 @@
                     th:class="${#fields.hasErrors('postalCode')}? 'error err-font-style'"></td>
             </tr>
             <tr>
+                <td th:class="${#fields.hasErrors('courseCode')}? 'error err-font-style'">Course Code:</td>
+                <td><input type="text" th:field="*{courseCode}" autocomplete="off" placeholder="Course Code"/></td>
+                <td th:if="${#fields.hasErrors('courseCode')}" th:errors="*{courseCode}"
+                    th:class="${#fields.hasErrors('courseCode')}? 'error err-font-style'"></td>
+            </tr>
+            <tr>
                 <td>Country Name:</td>
                 <td>
                     <select th:field="${student.countryName}">

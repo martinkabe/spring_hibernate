@@ -1,5 +1,6 @@
 package com.springframework.spring5recipeapp.data;
 
+import com.springframework.spring5recipeapp.validation.CourseCode;
 import lombok.Data;
 
 import javax.validation.constraints.Max;
@@ -30,6 +31,9 @@ public class Student {
     @NotBlank(message = "{validation.student.postalCode.NotBlank}")
     @Pattern(regexp = "^\\d{3}[ ]?\\d{2}", message = "{validation.student.postalCode.chars}")
     private String postalCode;
+
+    @CourseCode(value="MAR", message="field must start with MAR")
+    private String courseCode;
 
     private String countryName;
     private String languageName;

@@ -1,5 +1,6 @@
 package com.springframework.spring5recipeapp.configuration;
 
+import com.springframework.spring5recipeapp.data.Attributes;
 import com.springframework.spring5recipeapp.data.Student;
 import com.springframework.spring5recipeapp.utils.PropertyParser;
 import org.springframework.context.MessageSource;
@@ -16,9 +17,10 @@ public class StudentConfiguration {
     @Bean
     public Student student(PropertyParser parser) throws IOException {
         Student newStudent = new Student();
-        newStudent.setCountryOptions(parser.parse().getCountry());
-        newStudent.setLanguageOptions(parser.parse().getLanguage());
-        newStudent.setOsOptions(parser.parse().getOperatingSystem());
+        Attributes parsedAttributes = parser.parse();
+        newStudent.setCountryOptions(parsedAttributes.getCountry());
+        newStudent.setLanguageOptions(parsedAttributes.getLanguage());
+        newStudent.setOsOptions(parsedAttributes.getOperatingSystem());
         return newStudent;
     }
 

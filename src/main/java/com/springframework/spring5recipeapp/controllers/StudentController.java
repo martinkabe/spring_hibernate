@@ -3,7 +3,6 @@ package com.springframework.spring5recipeapp.controllers;
 import com.springframework.spring5recipeapp.data.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,7 +45,9 @@ public class StudentController {
                               Model model) {
         log.info("BindingResult: {}", theBindingResult);
         if (theBindingResult.hasErrors()) {
-            BeanUtils.copyProperties(student, theStudent);
+            theStudent.setCountryOptions(student.getCountryOptions());
+            theStudent.setLanguageOptions(student.getLanguageOptions());
+            theStudent.setOsOptions(student.getOsOptions());
             model.addAttribute("student", theStudent);
             return "student-form";
         } else {
