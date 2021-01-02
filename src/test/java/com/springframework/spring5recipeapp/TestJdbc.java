@@ -46,7 +46,7 @@ public class TestJdbc {
     }
 
     @Test
-    public void testJdbc() {
+    public void testJdbc_ReadFromResultSet() {
         try {
             log.info("Connecting successful, host: {}", myConn.getCatalog());
             stm = myConn.createStatement();
@@ -67,7 +67,7 @@ public class TestJdbc {
     }
 
     @Test
-    public void testHibernate() {
+    public void testJdbc_ReadFromJdbcTemplate() {
         List<Employee> employees = queries.getEmployees();
         log.info("Count of employees: {}", employees.size());
     }
