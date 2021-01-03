@@ -9,6 +9,9 @@ import java.util.List;
 @Repository
 public class EmployeeResults implements EmployeeQueries {
 
+    private static final String RETRIEVE_EMPLOYEES = "SELECT * FROM employee";
+    private static final String INSERT_EMPLOYEES = "INSERT INTO employee(first_name, last_name, email) VALUES(?, ?, ?)";
+
     private final JdbcTemplate jdbcTemplate;
 
     public EmployeeResults(JdbcTemplate jdbcTemplate) {
@@ -17,10 +20,8 @@ public class EmployeeResults implements EmployeeQueries {
 
     @Override
     public List<Employee> getEmployees() {
-        String sql = "SELECT * FROM employee";
-
         return jdbcTemplate.query(
-                sql,
+                RETRIEVE_EMPLOYEES,
                 (rs, rowNum) ->
                         new Employee(
                                 rs.getInt("id"),
@@ -29,5 +30,24 @@ public class EmployeeResults implements EmployeeQueries {
                                 rs.getString("email")
                         )
         );
+    }
+
+    @Override
+    public boolean insertEmloyee(Employee emp) {
+        int insert = jdbcTemplate.update(INSERT_EMPLOYEES, emp.getFirstName(), emp.getLastName(), emp.getEmail());
+        return insert > 0;
+    }
+
+    @Override
+    public int[][] insertEmployees(List<Employee> employees) {
+        return jdbcTemplate.batchUpdate(
+                INSERT_EMPLOYEES,
+                employees,
+                1000,
+                (ps, emp) -> {
+                    ps.setString(1, emp.getFirstName());
+                    ps.setString(2, emp.getLastName());
+                    ps.setString(3, emp.getEmail());
+                });
     }
 }

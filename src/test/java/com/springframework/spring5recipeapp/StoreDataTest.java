@@ -2,6 +2,7 @@ package com.springframework.spring5recipeapp;
 
 import com.mysql.cj.jdbc.ConnectionImpl;
 import com.springframework.spring5recipeapp.data.Employee;
+import com.springframework.spring5recipeapp.repository.EmployeeQueries;
 import com.springframework.spring5recipeapp.repository.EmployeeRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
@@ -28,6 +31,9 @@ public class StoreDataTest {
 
     @Autowired
     EmployeeRepository employeeRepository;
+
+    @Autowired
+    EmployeeQueries queries;
 
     @BeforeEach
     public void before() throws SQLException {
@@ -46,5 +52,22 @@ public class StoreDataTest {
         Employee employee = new Employee("Ivan", "Hrozny", "ihrozny@gmail.com");
         employee = employeeRepository.save(employee);
         log.info("Employee added: {}", employee);
+    }
+
+    @Test
+    public void saveData_JdbcTemplate_OneEmployee() {
+        Employee employee = new Employee("Chris", "Malvin", "cmalvin@gmail.com");
+        boolean isInserted = queries.insertEmloyee(employee);
+        assertTrue(isInserted);
+    }
+
+    @Test
+    public void saveData_JdbcTemplate_MultipleEmployees() {
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee("Melwin", "Dirkman", "mdirkman@gmail.com"));
+        employees.add(new Employee("Kirk", "Douglas", "kdouglas@gmail.com"));
+        employees.add(new Employee("Nathan", "Calm", "ncalm@gmail.com"));
+
+        queries.insertEmployees(employees);
     }
 }

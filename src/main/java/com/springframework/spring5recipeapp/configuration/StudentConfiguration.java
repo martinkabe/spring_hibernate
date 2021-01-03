@@ -1,12 +1,17 @@
 package com.springframework.spring5recipeapp.configuration;
 
-import com.springframework.spring5recipeapp.data.Attributes;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.springframework.spring5recipeapp.data.FormAttributes;
 import com.springframework.spring5recipeapp.data.Student;
-import com.springframework.spring5recipeapp.utils.PropertyParser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
@@ -15,14 +20,20 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 
 @Configuration
+@PropertySource("classpath:forms.properties")
 public class StudentConfiguration {
+
+    @Autowired
+    Environment env;
 
     @Bean
     public DataSource dataSource(DbConnProperties properties) {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setDriverClassName(properties.getDriverClassName());
         dataSource.setUrl(properties.getUrl());
         dataSource.setUsername(properties.getUsername());
         dataSource.setPassword(properties.getPassword());
@@ -37,12 +48,11 @@ public class StudentConfiguration {
     }
 
     @Bean
-    public Student student(PropertyParser parser) throws IOException {
+    public Student student() throws IOException {
         Student newStudent = new Student();
-        Attributes parsedAttributes = parser.parse();
-        newStudent.setCountryOptions(parsedAttributes.getCountry());
-        newStudent.setLanguageOptions(parsedAttributes.getLanguage());
-        newStudent.setOsOptions(parsedAttributes.getOperatingSystem());
+        newStudent.setCountryOptions(formAttributes().getCountry());
+        newStudent.setLanguageOptions(formAttributes().getLanguage());
+        newStudent.setOsOptions(formAttributes().getOperatingSystem());
         return newStudent;
     }
 
@@ -59,5 +69,15 @@ public class StudentConfiguration {
         LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
         bean.setValidationMessageSource(messageSource());
         return bean;
+    }
+
+    @Bean
+    public FormAttributes formAttributes() throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        return new FormAttributes(mapper.readValue(env.getProperty("form.country"),
+                new TypeReference<LinkedHashMap<String, String>>(){}),
+                mapper.readValue(env.getProperty("form.language"),
+                        new TypeReference<LinkedHashMap<String, String>>(){}),
+                Arrays.asList(env.getProperty("form.operatingSystem").split(",")));
     }
 }

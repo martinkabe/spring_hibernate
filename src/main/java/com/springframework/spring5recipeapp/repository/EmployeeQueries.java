@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface EmployeeQueries {
     List<Employee> getEmployees();
+    boolean insertEmloyee(Employee emp);
+    int[][] insertEmployees(List<Employee> employees);
 }
