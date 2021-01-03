@@ -3,7 +3,6 @@ package com.springframework.spring5recipeapp;
 import com.mysql.cj.jdbc.ConnectionImpl;
 import com.springframework.spring5recipeapp.data.Employee;
 import com.springframework.spring5recipeapp.repository.EmployeeQueries;
-import com.springframework.spring5recipeapp.repository.EmployeeRepository;
 import com.springframework.spring5recipeapp.service.QueryService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,9 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,9 +21,9 @@ import java.util.List;
 import static org.junit.Assert.assertTrue;
 
 @SpringBootTest
-public class TestJdbc {
+public class RetrieveDataTest {
 
-    private final Logger log = LoggerFactory.getLogger(TestJdbc.class);
+    private final Logger log = LoggerFactory.getLogger(RetrieveDataTest.class);
 
     private Connection myConn = null;
     private Statement stm = null;
