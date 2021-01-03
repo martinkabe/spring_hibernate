@@ -3,6 +3,8 @@ package com.springframework.spring5recipeapp;
 import com.mysql.cj.jdbc.ConnectionImpl;
 import com.springframework.spring5recipeapp.data.Employee;
 import com.springframework.spring5recipeapp.repository.EmployeeQueries;
+import com.springframework.spring5recipeapp.repository.EmployeeRepository;
+import com.springframework.spring5recipeapp.service.QueryService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,6 +34,9 @@ public class TestJdbc {
 
     @Autowired
     private Connection getProperties;
+
+    @Autowired
+    QueryService queryservice;
 
     @Autowired
     EmployeeQueries queries;
@@ -70,5 +78,17 @@ public class TestJdbc {
     public void testJdbc_ReadFromJdbcTemplate() {
         List<Employee> employees = queries.getEmployees();
         log.info("Count of employees: {}", employees.size());
+    }
+
+    @Test
+    public void testJdbc_JpaFindAllApproach() {
+        List<Employee> employees = queryservice.studentAllData();
+        log.info("#Employees: {}", employees.size());
+    }
+
+    @Test
+    public void testJdbc_JpaEntityManagementFactoryApproach() {
+        List<Employee> employees = queryservice.JPQLQuery();
+        log.info("#Employees: {}", employees.size());
     }
 }
