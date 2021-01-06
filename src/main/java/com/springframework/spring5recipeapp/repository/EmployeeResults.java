@@ -39,8 +39,8 @@ public class EmployeeResults implements EmployeeQueries {
     }
 
     @Override
-    public int[][] insertEmployees(List<Employee> employees) {
-        return jdbcTemplate.batchUpdate(
+    public void insertEmployees(List<Employee> employees) {
+        jdbcTemplate.batchUpdate(
                 INSERT_EMPLOYEES,
                 employees,
                 1000,
