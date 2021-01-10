@@ -2,6 +2,12 @@ package com.springframework.spring5recipeapp.service;
 
 import com.springframework.spring5recipeapp.data.Employee;
 import com.springframework.spring5recipeapp.repository.EmployeeRepository;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +21,9 @@ public class EmployeeQueryService implements QueryService {
 
     @Autowired
     EmployeeRepository employeeRepository;
+
+    @Autowired
+    private MetadataSources getMetaSource;
 
     @Autowired
     EntityManagerFactory emf;
@@ -33,5 +42,27 @@ public class EmployeeQueryService implements QueryService {
     @Override
     public List<Employee> studentAllData() {
         return employeeRepository.findAll();
+    }
+
+    @Override
+    public List<Employee> hibernateAllData() {
+        getMetaSource.addAnnotatedClass(Employee.class);
+        Metadata metadata = getMetaSource.buildMetadata();
+
+        // here we build the SessionFactory (Hibernate 5.4.27.Final)
+        SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build();
+        Session session = sessionFactory.getCurrentSession();
+
+        Transaction tr = session.beginTransaction();
+        List<Employee> employees;
+
+        try {
+            Query<Employee> query = session.createQuery("select e from Employee e", Employee.class);
+            employees = query.list();
+        } finally {
+            tr.commit();
+            session.close();
+        }
+        return employees;
     }
 }

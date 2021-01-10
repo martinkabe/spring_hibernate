@@ -12,4 +12,8 @@ public class DbConnProperties {
     private String username;
     private String password;
     private String driverClassName;
+    private String dialect;
+    private String currentSessionContextClass;
+    private String showSql;
+    private String formatSql;
 }

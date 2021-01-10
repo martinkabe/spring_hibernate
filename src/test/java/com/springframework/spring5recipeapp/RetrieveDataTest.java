@@ -34,10 +34,10 @@ public class RetrieveDataTest {
     private Connection getProperties;
 
     @Autowired
-    QueryService queryservice;
+    private QueryService queryservice;
 
     @Autowired
-    EmployeeQueries queries;
+    private EmployeeQueries queries;
 
     @BeforeEach
     public void before() throws SQLException {
@@ -87,6 +87,12 @@ public class RetrieveDataTest {
     @Test
     public void testJdbc_JpaEntityManagementFactoryApproach() {
         List<Employee> employees = queryservice.JPQLQuery();
+        log.info("#Employees: {}", employees.size());
+    }
+
+    @Test
+    public void testHibernate_SessionApproach() {
+        List<Employee> employees = queryservice.hibernateAllData();
         log.info("#Employees: {}", employees.size());
     }
 }

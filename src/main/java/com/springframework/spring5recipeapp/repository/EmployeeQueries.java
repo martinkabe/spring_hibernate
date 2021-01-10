@@ -8,4 +8,5 @@ public interface EmployeeQueries {
     List<Employee> getEmployees();
     boolean insertEmloyee(Employee emp);
     void insertEmployees(List<Employee> employees);
+    void hibernateInsertEmployees(List<Employee> employees);
 }

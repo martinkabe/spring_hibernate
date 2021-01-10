@@ -7,4 +7,5 @@ import java.util.List;
 public interface QueryService {
     List<Employee> JPQLQuery();
     List<Employee> studentAllData();
+    List<Employee> hibernateAllData();
 }

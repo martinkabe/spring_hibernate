@@ -72,4 +72,12 @@ public class StoreDataTest {
 
         queries.insertEmployees(employees);
     }
+
+    @Test
+    public void saveData_Hibernate_MultipleEmployees() {
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee("Kirk", "McLeod", "kmcleod@gmail.com"));
+        employees.add(new Employee("Dirk", "McLeod", "dmcleod@gmail.com"));
+        queries.hibernateInsertEmployees(employees);
+    }
 }
