@@ -78,6 +78,6 @@ public class StoreDataTest {
         List<Employee> employees = new ArrayList<>();
         employees.add(new Employee("Kirk", "McLeod", "kmcleod@gmail.com"));
         employees.add(new Employee("Dirk", "McLeod", "dmcleod@gmail.com"));
-        queries.hibernateInsertEmployees(employees);
+        queries.hibernateInsertEntity(employees, Employee.class);
     }
 }

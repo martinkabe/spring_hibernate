@@ -61,8 +61,8 @@ public class EmployeeResults implements EmployeeQueries {
     }
 
     @Override
-    public void hibernateInsertEmployees(List<Employee> employees) {
-        getMetaSource.addAnnotatedClass(Employee.class);
+    public <T> void hibernateInsertEntity(List<T> listItems, Class<T> entity) {
+        getMetaSource.addAnnotatedClass(entity);
         Metadata metadata = getMetaSource.buildMetadata();
 
         // here we build the SessionFactory (Hibernate 5.4.27.Final)
@@ -71,8 +71,7 @@ public class EmployeeResults implements EmployeeQueries {
         Transaction tr = session.beginTransaction();
 
         try {
-            for (Employee employee : employees)
-                session.save(employee);
+            listItems.forEach(session::save);
 
         } finally {
             tr.commit();
