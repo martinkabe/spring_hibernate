@@ -49,9 +49,6 @@ public class StudentController {
                               Model model) {
         log.info("BindingResult: {}", theBindingResult);
         if (theBindingResult.hasErrors()) {
-            theStudent.setCountryName(student.getCountryName());
-            theStudent.setLanguageName(student.getLanguageName());
-            theStudent.setOsName(student.getOsName());
             model.addAttribute("student", theStudent);
             model.addAttribute("formAttributes", formAttributes);
             return "student-form";
