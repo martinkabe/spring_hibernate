@@ -44,7 +44,7 @@
                 <td>
                     <select th:field="${student.countryName}">
                         <option th:value="''" th:text="'-- Select Country --'"></option>
-                        <option th:each="country : ${student.countryOptions}"
+                        <option th:each="country : ${formAttributes.country}"
                                 th:value="${country.value}"
                                 th:text="${country.key}"></option>
                     </select>
@@ -57,12 +57,12 @@
 
         <br><br>
         <input th:type="radio" th:field="${student.languageName}"
-               th:each="language : ${student.languageOptions}"
+               th:each="language : ${formAttributes.language}"
                th:value="${language.value}"
                th:text="${language.key}"/>
         <br><br>
         <input type="checkbox" th:field="${student.osName}"
-                th:each="os : ${student.osOptions}"
+                th:each="os : ${formAttributes.operatingSystem}"
                 th:value="${os}"
                 th:text="${os}"
                 th:checked="${true}"/>

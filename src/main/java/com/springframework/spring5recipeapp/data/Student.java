@@ -1,19 +1,35 @@
 package com.springframework.spring5recipeapp.data;
 
 import com.springframework.spring5recipeapp.validation.CourseCode;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.io.Serializable;
 
+@Entity(name = "Student")
+@Table(name = "student")
 @Data
-public class Student {
+@AllArgsConstructor
+@NoArgsConstructor
+public class Student implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
+    private int id;
 
     @NotNull(message = "{validation.student.name.NotNull}")
     @Size(min=3, max=20, message = "The size of the field should be {min}-{max}")
@@ -37,8 +53,5 @@ public class Student {
 
     private String countryName;
     private String languageName;
-    private List<String> osName;
-    private LinkedHashMap<String, String> countryOptions;
-    private LinkedHashMap<String, String> languageOptions;
-    private List<String> osOptions;
+    private String osName;
 }

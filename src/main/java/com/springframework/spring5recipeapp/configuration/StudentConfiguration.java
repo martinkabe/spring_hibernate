@@ -3,7 +3,7 @@ package com.springframework.spring5recipeapp.configuration;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.springframework.spring5recipeapp.data.FormAttributes;
+import com.springframework.spring5recipeapp.data.PreFilledFormAttributes;
 import com.springframework.spring5recipeapp.data.Student;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -19,7 +19,6 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -53,12 +52,8 @@ public class StudentConfiguration {
     }
 
     @Bean
-    public Student student() throws IOException {
-        Student newStudent = new Student();
-        newStudent.setCountryOptions(formAttributes().getCountry());
-        newStudent.setLanguageOptions(formAttributes().getLanguage());
-        newStudent.setOsOptions(formAttributes().getOperatingSystem());
-        return newStudent;
+    public Student student() {
+        return new Student();
     }
 
     @Bean
@@ -77,9 +72,9 @@ public class StudentConfiguration {
     }
 
     @Bean
-    public FormAttributes formAttributes() throws JsonProcessingException {
+    public PreFilledFormAttributes formAttributes() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        return new FormAttributes(mapper.readValue(env.getProperty("form.country"),
+        return new PreFilledFormAttributes(mapper.readValue(env.getProperty("form.country"),
                 new TypeReference<LinkedHashMap<String, String>>(){}),
                 mapper.readValue(env.getProperty("form.language"),
                         new TypeReference<LinkedHashMap<String, String>>(){}),

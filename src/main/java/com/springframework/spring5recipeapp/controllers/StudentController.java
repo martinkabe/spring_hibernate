@@ -1,5 +1,6 @@
 package com.springframework.spring5recipeapp.controllers;
 
+import com.springframework.spring5recipeapp.data.PreFilledFormAttributes;
 import com.springframework.spring5recipeapp.data.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +23,11 @@ public class StudentController {
     private final Logger log = LoggerFactory.getLogger(StudentController.class);
 
     private final Student student;
+    private final PreFilledFormAttributes formAttributes;
 
-    public StudentController(Student student) {
+    public StudentController(Student student, PreFilledFormAttributes formAttributes) {
         this.student = student;
+        this.formAttributes = formAttributes;
     }
 
     @InitBinder
@@ -36,6 +39,7 @@ public class StudentController {
     @RequestMapping(value = "/showForm", method=RequestMethod.GET)
     public String showForm(Model theModel) {
         theModel.addAttribute("student", student);
+        theModel.addAttribute("formAttributes", formAttributes);
         return "student-form";
     }
 
@@ -45,10 +49,11 @@ public class StudentController {
                               Model model) {
         log.info("BindingResult: {}", theBindingResult);
         if (theBindingResult.hasErrors()) {
-            theStudent.setCountryOptions(student.getCountryOptions());
-            theStudent.setLanguageOptions(student.getLanguageOptions());
-            theStudent.setOsOptions(student.getOsOptions());
+            theStudent.setCountryName(student.getCountryName());
+            theStudent.setLanguageName(student.getLanguageName());
+            theStudent.setOsName(student.getOsName());
             model.addAttribute("student", theStudent);
+            model.addAttribute("formAttributes", formAttributes);
             return "student-form";
         } else {
             model.addAttribute("student", theStudent);

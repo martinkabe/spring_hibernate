@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class FormAttributes {
+public class PreFilledFormAttributes {
     private LinkedHashMap<String, String> country;
     private LinkedHashMap<String, String> language;
     private List<String> operatingSystem;
