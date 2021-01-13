@@ -45,8 +45,8 @@ public class EmployeeQueryService implements QueryService {
     }
 
     @Override
-    public List<Employee> hibernateAllData() {
-        getMetaSource.addAnnotatedClass(Employee.class);
+    public <T> List<T> hibernateAllData(Class<T> entityClass) {
+        getMetaSource.addAnnotatedClass(entityClass);
         Metadata metadata = getMetaSource.buildMetadata();
 
         // here we build the SessionFactory (Hibernate 5.4.27.Final)
@@ -54,15 +54,16 @@ public class EmployeeQueryService implements QueryService {
         Session session = sessionFactory.getCurrentSession();
 
         Transaction tr = session.beginTransaction();
-        List<Employee> employees;
+        List<T> entitiesList;
 
         try {
-            Query<Employee> query = session.createQuery("select e from Employee e", Employee.class);
-            employees = query.list();
+            Query<T> query = session.createQuery("select e from " + entityClass.getSimpleName() + " e",
+                    entityClass);
+            entitiesList = query.list();
         } finally {
             tr.commit();
             session.close();
         }
-        return employees;
+        return entitiesList;
     }
 }

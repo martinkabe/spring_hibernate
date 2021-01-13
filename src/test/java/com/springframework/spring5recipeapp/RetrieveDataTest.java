@@ -92,7 +92,7 @@ public class RetrieveDataTest {
 
     @Test
     public void testHibernate_SessionApproach() {
-        List<Employee> employees = queryservice.hibernateAllData();
+        List<Employee> employees = queryservice.hibernateAllData(Employee.class);
         log.info("#Employees: {}", employees.size());
     }
 }
