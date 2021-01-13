@@ -61,12 +61,9 @@ public class EmployeeResults implements EmployeeQueries {
     }
 
     @Override
-    public <T> void hibernateInsertEntity(List<T> listItems, Class<T> entity) {
-        getMetaSource.addAnnotatedClass(entity);
-        Metadata metadata = getMetaSource.buildMetadata();
-
+    public <T> void hibernateInsertEntities(List<T> listItems, Class<T> entity) {
         // here we build the SessionFactory (Hibernate 5.4.27.Final)
-        SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build();
+        SessionFactory sessionFactory = getMetadata(entity).getSessionFactoryBuilder().build();
         Session session = sessionFactory.getCurrentSession();
         Transaction tr = session.beginTransaction();
 
@@ -77,5 +74,26 @@ public class EmployeeResults implements EmployeeQueries {
             tr.commit();
             session.close();
         }
+    }
+
+    @Override
+    public <T> void hibernateInsertEntity(T item, Class<T> entity) {
+        // here we build the SessionFactory (Hibernate 5.4.27.Final)
+        SessionFactory sessionFactory = getMetadata(entity).getSessionFactoryBuilder().build();
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tr = session.beginTransaction();
+
+        try {
+            session.save(item);
+
+        } finally {
+            tr.commit();
+            session.close();
+        }
+    }
+
+    private <T> Metadata getMetadata(Class<T> entity) {
+        getMetaSource.addAnnotatedClass(entity);
+        return getMetaSource.buildMetadata();
     }
 }

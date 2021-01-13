@@ -2,6 +2,7 @@ package com.springframework.spring5recipeapp.controllers;
 
 import com.springframework.spring5recipeapp.data.PreFilledFormAttributes;
 import com.springframework.spring5recipeapp.data.Student;
+import com.springframework.spring5recipeapp.repository.EmployeeQueries;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -24,10 +25,12 @@ public class StudentController {
 
     private final Student student;
     private final PreFilledFormAttributes formAttributes;
+    private final EmployeeQueries query;
 
-    public StudentController(Student student, PreFilledFormAttributes formAttributes) {
+    public StudentController(Student student, PreFilledFormAttributes formAttributes, EmployeeQueries query) {
         this.student = student;
         this.formAttributes = formAttributes;
+        this.query = query;
     }
 
     @InitBinder
@@ -54,6 +57,7 @@ public class StudentController {
             return "student-form";
         } else {
             model.addAttribute("student", theStudent);
+            query.hibernateInsertEntity(theStudent, Student.class);
             return "student-confirmation";
         }
     }

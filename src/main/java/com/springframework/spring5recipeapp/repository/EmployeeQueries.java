@@ -8,5 +8,6 @@ public interface EmployeeQueries {
     List<Employee> getEmployees();
     boolean insertEmloyee(Employee emp);
     void insertEmployees(List<Employee> employees);
-    <T> void hibernateInsertEntity(List<T> listItems, Class<T> entity);
+    <T> void hibernateInsertEntities(List<T> listItems, Class<T> entity);
+    <T> void hibernateInsertEntity(T item, Class<T> entity);
 }
