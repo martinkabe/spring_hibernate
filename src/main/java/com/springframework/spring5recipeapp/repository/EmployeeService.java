@@ -6,14 +6,18 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
-public class EmployeeResults implements EmployeeQueries {
+public class EmployeeService implements EmployeeQueries {
 
     private static final String RETRIEVE_EMPLOYEES = "SELECT * FROM employee";
     private static final String INSERT_EMPLOYEES = "INSERT INTO employee(first_name, last_name, email) VALUES(?, ?, ?)";
@@ -23,7 +27,13 @@ public class EmployeeResults implements EmployeeQueries {
     @Autowired
     private MetadataSources getMetaSource;
 
-    public EmployeeResults(JdbcTemplate jdbcTemplate) {
+    @Autowired
+    EntityManagerFactory emf;
+
+    @Autowired
+    EmployeeCrudRepository employeeCrudRepository;
+
+    public EmployeeService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -90,6 +100,45 @@ public class EmployeeResults implements EmployeeQueries {
             tr.commit();
             session.close();
         }
+    }
+
+    @Override
+    public List<Employee> JPQLQuery() {
+        EntityManager em = emf.createEntityManager();
+        //em.getTransaction().begin( );
+
+        TypedQuery<Employee> query = em.createQuery("Select e from Employee e ", Employee.class);
+        List<Employee> employees = query.getResultList();
+        em.close();
+        return employees;
+    }
+
+    @Override
+    public List<Employee> studentAllData() {
+        return employeeCrudRepository.findAll();
+    }
+
+    @Override
+    public <T> List<T> hibernateAllData(Class<T> entityClass) {
+        getMetaSource.addAnnotatedClass(entityClass);
+        Metadata metadata = getMetaSource.buildMetadata();
+
+        // here we build the SessionFactory (Hibernate 5.4.27.Final)
+        SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build();
+        Session session = sessionFactory.getCurrentSession();
+
+        Transaction tr = session.beginTransaction();
+        List<T> entitiesList;
+
+        try {
+            Query<T> query = session.createQuery("select e from " + entityClass.getSimpleName() + " e",
+                    entityClass);
+            entitiesList = query.list();
+        } finally {
+            tr.commit();
+            session.close();
+        }
+        return entitiesList;
     }
 
     private <T> Metadata getMetadata(Class<T> entity) {

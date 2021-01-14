@@ -3,7 +3,6 @@ package com.springframework.spring5recipeapp;
 import com.mysql.cj.jdbc.ConnectionImpl;
 import com.springframework.spring5recipeapp.data.Employee;
 import com.springframework.spring5recipeapp.repository.EmployeeQueries;
-import com.springframework.spring5recipeapp.service.QueryService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,9 +31,6 @@ public class RetrieveDataTest {
 
     @Autowired
     private Connection getProperties;
-
-    @Autowired
-    private QueryService queryservice;
 
     @Autowired
     private EmployeeQueries queries;
@@ -80,19 +76,19 @@ public class RetrieveDataTest {
 
     @Test
     public void testJdbc_JpaFindAllApproach() {
-        List<Employee> employees = queryservice.studentAllData();
+        List<Employee> employees = queries.studentAllData();
         log.info("#Employees: {}", employees.size());
     }
 
     @Test
     public void testJdbc_JpaEntityManagementFactoryApproach() {
-        List<Employee> employees = queryservice.JPQLQuery();
+        List<Employee> employees = queries.JPQLQuery();
         log.info("#Employees: {}", employees.size());
     }
 
     @Test
     public void testHibernate_SessionApproach() {
-        List<Employee> employees = queryservice.hibernateAllData(Employee.class);
+        List<Employee> employees = queries.hibernateAllData(Employee.class);
         log.info("#Employees: {}", employees.size());
     }
 }

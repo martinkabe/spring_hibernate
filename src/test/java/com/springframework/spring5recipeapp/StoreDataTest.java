@@ -3,7 +3,7 @@ package com.springframework.spring5recipeapp;
 import com.mysql.cj.jdbc.ConnectionImpl;
 import com.springframework.spring5recipeapp.data.Employee;
 import com.springframework.spring5recipeapp.repository.EmployeeQueries;
-import com.springframework.spring5recipeapp.repository.EmployeeRepository;
+import com.springframework.spring5recipeapp.repository.EmployeeCrudRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ public class StoreDataTest {
     private Connection getProperties;
 
     @Autowired
-    EmployeeRepository employeeRepository;
+    EmployeeCrudRepository employeeCrudRepository;
 
     @Autowired
     EmployeeQueries queries;
@@ -52,7 +52,7 @@ public class StoreDataTest {
     @Test
     public void saveData_CrudRepository() {
         Employee employee = new Employee("Ivan", "Hrozny", "ihrozny@gmail.com");
-        employee = employeeRepository.save(employee);
+        employee = employeeCrudRepository.save(employee);
         log.info("Employee added: {}", employee);
     }
 

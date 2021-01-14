@@ -29,4 +29,4 @@ CREATE TABLE `student` (
   language_name varchar(50),
   os_name varchar(20),
   PRIMARY KEY (`student_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
