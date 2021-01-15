@@ -1,6 +1,6 @@
-package com.springboot.webapp.repository;
+package com.springboot.hcrud.repository;
 
-import com.springboot.webapp.data.Employee;
+import com.springboot.hcrud.data.Employee;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

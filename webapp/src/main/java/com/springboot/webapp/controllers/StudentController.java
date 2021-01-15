@@ -1,12 +1,10 @@
 package com.springboot.webapp.controllers;
 
-import com.springboot.helper.spring.Helper;
-import com.springboot.webapp.data.PreFilledFormAttributes;
-import com.springboot.webapp.data.Student;
-import com.springboot.webapp.repository.EmployeeQueries;
+import com.springboot.hcrud.spring.HibernateService;
+import com.springboot.hcrud.data.PreFilledFormAttributes;
+import com.springboot.hcrud.data.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,15 +25,12 @@ public class StudentController {
 
     private final Student student;
     private final PreFilledFormAttributes formAttributes;
-    private final EmployeeQueries query;
+    private final HibernateService service;
 
-    @Autowired
-    private Helper helper;
-
-    public StudentController(Student student, PreFilledFormAttributes formAttributes, EmployeeQueries query) {
+    public StudentController(Student student, PreFilledFormAttributes formAttributes, HibernateService service) {
         this.student = student;
         this.formAttributes = formAttributes;
-        this.query = query;
+        this.service = service;
     }
 
     @InitBinder
@@ -61,9 +56,8 @@ public class StudentController {
             model.addAttribute("formAttributes", formAttributes);
             return "student-form";
         } else {
-            helper.saySomething(theStudent.getFirstName());
             model.addAttribute("student", theStudent);
-            query.hibernateInsertEntity(theStudent, Student.class);
+            service.hibernateInsertEntity(theStudent, Student.class);
             return "student-confirmation";
         }
     }

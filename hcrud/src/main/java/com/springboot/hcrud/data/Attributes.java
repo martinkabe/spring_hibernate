@@ -1,4 +1,4 @@
-package com.springboot.webapp.data;
+package com.springboot.hcrud.data;
 
 import lombok.Builder;
 import lombok.Data;

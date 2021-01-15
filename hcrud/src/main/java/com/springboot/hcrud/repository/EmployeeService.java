@@ -1,12 +1,7 @@
-package com.springboot.webapp.repository;
+package com.springboot.hcrud.repository;
 
-import com.springboot.webapp.data.Employee;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.boot.Metadata;
+import com.springboot.hcrud.data.Employee;
 import org.hibernate.boot.MetadataSources;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -71,38 +66,6 @@ public class EmployeeService implements EmployeeQueries {
     }
 
     @Override
-    public <T> void hibernateInsertEntities(List<T> listItems, Class<T> entity) {
-        // here we build the SessionFactory (Hibernate 5.4.27.Final)
-        SessionFactory sessionFactory = getMetadata(entity).getSessionFactoryBuilder().build();
-        Session session = sessionFactory.getCurrentSession();
-        Transaction tr = session.beginTransaction();
-
-        try {
-            listItems.forEach(session::save);
-
-        } finally {
-            tr.commit();
-            session.close();
-        }
-    }
-
-    @Override
-    public <T> void hibernateInsertEntity(T item, Class<T> entity) {
-        // here we build the SessionFactory (Hibernate 5.4.27.Final)
-        SessionFactory sessionFactory = getMetadata(entity).getSessionFactoryBuilder().build();
-        Session session = sessionFactory.getCurrentSession();
-        Transaction tr = session.beginTransaction();
-
-        try {
-            session.save(item);
-
-        } finally {
-            tr.commit();
-            session.close();
-        }
-    }
-
-    @Override
     public List<Employee> JPQLQuery() {
         EntityManager em = emf.createEntityManager();
         //em.getTransaction().begin( );
@@ -116,33 +79,5 @@ public class EmployeeService implements EmployeeQueries {
     @Override
     public List<Employee> studentAllData() {
         return employeeCrudRepository.findAll();
-    }
-
-    @Override
-    public <T> List<T> hibernateAllData(Class<T> entityClass) {
-        getMetaSource.addAnnotatedClass(entityClass);
-        Metadata metadata = getMetaSource.buildMetadata();
-
-        // here we build the SessionFactory (Hibernate 5.4.27.Final)
-        SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build();
-        Session session = sessionFactory.getCurrentSession();
-
-        Transaction tr = session.beginTransaction();
-        List<T> entitiesList;
-
-        try {
-            Query<T> query = session.createQuery("select e from " + entityClass.getSimpleName() + " e",
-                    entityClass);
-            entitiesList = query.list();
-        } finally {
-            tr.commit();
-            session.close();
-        }
-        return entitiesList;
-    }
-
-    private <T> Metadata getMetadata(Class<T> entity) {
-        getMetaSource.addAnnotatedClass(entity);
-        return getMetaSource.buildMetadata();
     }
 }

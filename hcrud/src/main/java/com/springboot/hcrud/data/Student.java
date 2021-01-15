@@ -1,6 +1,6 @@
-package com.springboot.webapp.data;
+package com.springboot.hcrud.data;
 
-import com.springboot.webapp.validation.CourseCode;
+import com.springboot.hcrud.validation.CourseCode;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

@@ -1,4 +1,4 @@
-package com.springboot.webapp.validation;
+package com.springboot.hcrud.validation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

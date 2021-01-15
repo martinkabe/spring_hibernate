@@ -11,14 +11,14 @@
 
     <artifactId>webapp</artifactId>
     <packaging>jar</packaging>
+
     <dependencies>
         <dependency>
             <groupId>com.springframework</groupId>
-            <artifactId>helper</artifactId>
+            <artifactId>hcrud</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
-
 
 </project>

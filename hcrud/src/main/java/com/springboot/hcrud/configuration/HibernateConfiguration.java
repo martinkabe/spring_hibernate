@@ -1,10 +1,12 @@
-package com.springboot.webapp.configuration;
+package com.springboot.hcrud.configuration;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.springboot.webapp.data.PreFilledFormAttributes;
-import com.springboot.webapp.data.Student;
+import com.springboot.hcrud.data.PreFilledFormAttributes;
+import com.springboot.hcrud.data.Student;
+import com.springboot.hcrud.spring.HibernateService;
+import com.springboot.hcrud.spring.HibernateSpring;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.service.ServiceRegistry;
@@ -29,10 +31,15 @@ import java.util.Map;
 
 @Configuration
 @PropertySource("classpath:forms.properties")
-public class StudentConfiguration {
+public class HibernateConfiguration {
 
     @Autowired
     private Environment env;
+
+    @Bean
+    public HibernateService hibernateService(MetadataSources metadataSources) {
+        return new HibernateSpring(metadataSources);
+    }
 
     @Bean
     public DataSource dataSource(DbConnProperties properties) {
@@ -45,10 +52,28 @@ public class StudentConfiguration {
     }
 
     @Bean
+    public MetadataSources getMetaSource(DbConnProperties properties) {
+        Map<String, String> settings = new HashMap<>();
+        settings.put("connection.driver_class", properties.getDriverClassName());
+        settings.put("dialect", properties.getDialect());
+        settings.put("hibernate.connection.url", properties.getUrl());
+        settings.put("hibernate.connection.username", properties.getUsername());
+        settings.put("hibernate.connection.password", properties.getPassword());
+        settings.put("hibernate.current_session_context_class", properties.getCurrentSessionContextClass());
+        settings.put("hibernate.show_sql", properties.getShowSql());
+        settings.put("hibernate.format_sql", properties.getFormatSql());
+
+        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                .applySettings(settings).build();
+
+        return new MetadataSources(serviceRegistry);
+    }
+
+    @Bean
     public Connection getProperties(DbConnProperties properties) throws SQLException {
         return DriverManager.getConnection(properties.getUrl(),
-                                            properties.getUsername(),
-                                            properties.getUsername());
+                properties.getUsername(),
+                properties.getUsername());
     }
 
     @Bean
@@ -79,23 +104,5 @@ public class StudentConfiguration {
                 mapper.readValue(env.getProperty("form.language"),
                         new TypeReference<LinkedHashMap<String, String>>(){}),
                 Arrays.asList(env.getProperty("form.operatingSystem").split(",")));
-    }
-
-    @Bean
-    public MetadataSources getMetaSource(DbConnProperties properties) {
-        Map<String, String> settings = new HashMap<>();
-        settings.put("connection.driver_class", properties.getDriverClassName());
-        settings.put("dialect", properties.getDialect());
-        settings.put("hibernate.connection.url", properties.getUrl());
-        settings.put("hibernate.connection.username", properties.getUsername());
-        settings.put("hibernate.connection.password", properties.getPassword());
-        settings.put("hibernate.current_session_context_class", properties.getCurrentSessionContextClass());
-        settings.put("hibernate.show_sql", properties.getShowSql());
-        settings.put("hibernate.format_sql", properties.getFormatSql());
-
-        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                .applySettings(settings).build();
-
-        return new MetadataSources(serviceRegistry);
     }
 }

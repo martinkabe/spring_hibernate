@@ -1,4 +1,4 @@
-package com.springboot.webapp.configuration;
+package com.springboot.hcrud.configuration;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
