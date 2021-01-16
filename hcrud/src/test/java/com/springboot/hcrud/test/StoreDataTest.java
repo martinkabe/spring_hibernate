@@ -2,9 +2,7 @@ package com.springboot.hcrud.test;
 
 import com.mysql.cj.jdbc.ConnectionImpl;
 import com.springboot.hcrud.data.Employee;
-import com.springboot.hcrud.repository.EmployeeCrudRepository;
-import com.springboot.hcrud.repository.EmployeeQueries;
-import com.springboot.hcrud.spring.HibernateService;
+import com.springboot.hcrud.repository.DataQueries;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,13 +31,7 @@ public class StoreDataTest {
     private Connection getProperties;
 
     @Autowired
-    private EmployeeCrudRepository employeeCrudRepository;
-
-    @Autowired
-    private EmployeeQueries queries;
-
-    @Autowired
-    private HibernateService hService;
+    private DataQueries dataQueries;
 
     @BeforeEach
     public void before() throws SQLException {
@@ -54,16 +46,9 @@ public class StoreDataTest {
     }
 
     @Test
-    public void saveData_CrudRepository() {
-        Employee employee = new Employee("Ivan", "Hrozny", "ihrozny@gmail.com");
-        employee = employeeCrudRepository.save(employee);
-        log.info("Employee added: {}", employee);
-    }
-
-    @Test
     public void saveData_JdbcTemplate_OneEmployee() {
         Employee employee = new Employee("Chris", "Malvin", "cmalvin@gmail.com");
-        boolean isInserted = queries.insertEmloyee(employee);
+        boolean isInserted = dataQueries.insertEmloyeeJdbcTemplateUpdate(employee);
         assertTrue(isInserted);
     }
 
@@ -74,7 +59,7 @@ public class StoreDataTest {
         employees.add(new Employee("Kirk", "Douglas", "kdouglas@gmail.com"));
         employees.add(new Employee("Nathan", "Calm", "ncalm@gmail.com"));
 
-        queries.insertEmployees(employees);
+        dataQueries.insertEmloyeeJdbcTemplateBatchUpdate(employees);
     }
 
     @Test
@@ -82,12 +67,12 @@ public class StoreDataTest {
         List<Employee> employees = new ArrayList<>();
         employees.add(new Employee("Kirk", "McLeod", "kmcleod@gmail.com"));
         employees.add(new Employee("Dirk", "McLeod", "dmcleod@gmail.com"));
-        hService.hibernateInsertEntities(employees, Employee.class);
+        dataQueries.insertEntitiesHibernate(employees, Employee.class);
     }
 
     @Test
     public void saveData_Hibernate_SingleEmployee() {
         Employee emp = new Employee("Justin", "Gilmore", "jgilmore@gmail.com");
-        hService.hibernateInsertEntity(emp, Employee.class);
+        dataQueries.insertEntityHibernate(emp, Employee.class);
     }
 }

@@ -11,5 +11,8 @@
 
     <artifactId>hcrud</artifactId>
 
+    <dependencies>
+
+    </dependencies>
 
 </project>

@@ -5,21 +5,22 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springboot.hcrud.data.PreFilledFormAttributes;
 import com.springboot.hcrud.data.Student;
-import com.springboot.hcrud.spring.HibernateService;
-import com.springboot.hcrud.spring.HibernateSpring;
+import com.springboot.hcrud.repository.DataQueries;
+import com.springboot.hcrud.repository.DataService;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.service.ServiceRegistry;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -31,14 +32,13 @@ import java.util.Map;
 
 @Configuration
 @PropertySource("classpath:forms.properties")
-public class HibernateConfiguration {
-
-    @Autowired
-    private Environment env;
+public class DataConfiguration {
 
     @Bean
-    public HibernateService hibernateService(MetadataSources metadataSources) {
-        return new HibernateSpring(metadataSources);
+    public DataQueries dataQueries(JdbcTemplate jdbcTemplate,
+                                   MetadataSources metadataSources,
+                                   EntityManagerFactory entityManagerFactory) {
+        return new DataService(jdbcTemplate, metadataSources, entityManagerFactory);
     }
 
     @Bean
@@ -97,7 +97,7 @@ public class HibernateConfiguration {
     }
 
     @Bean
-    public PreFilledFormAttributes formAttributes() throws JsonProcessingException {
+    public PreFilledFormAttributes formAttributes(Environment env) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         return new PreFilledFormAttributes(mapper.readValue(env.getProperty("form.country"),
                 new TypeReference<LinkedHashMap<String, String>>(){}),

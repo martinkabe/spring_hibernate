@@ -2,8 +2,7 @@ package com.springboot.hcrud.test;
 
 import com.mysql.cj.jdbc.ConnectionImpl;
 import com.springboot.hcrud.data.Employee;
-import com.springboot.hcrud.repository.EmployeeQueries;
-import com.springboot.hcrud.spring.HibernateService;
+import com.springboot.hcrud.repository.DataQueries;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,10 +34,7 @@ public class RetrieveDataTest {
     private Connection getProperties;
 
     @Autowired
-    private EmployeeQueries queries;
-
-    @Autowired
-    private HibernateService hibernateSpring;
+    private DataQueries dataQueries;
 
     @BeforeEach
     public void before() throws SQLException {
@@ -75,25 +71,19 @@ public class RetrieveDataTest {
 
     @Test
     public void testJdbc_ReadFromJdbcTemplate() {
-        List<Employee> employees = queries.getEmployees();
+        List<Employee> employees = dataQueries.getEmployeesJdbcTemplate();
         log.info("Count of employees: {}", employees.size());
     }
 
     @Test
-    public void testJdbc_JpaFindAllApproach() {
-        List<Employee> employees = queries.studentAllData();
-        log.info("#Employees: {}", employees.size());
-    }
-
-    @Test
     public void testJdbc_JpaEntityManagementFactoryApproach() {
-        List<Employee> employees = queries.JPQLQuery();
+        List<Employee> employees = dataQueries.getEmployeesEntityManager();
         log.info("#Employees: {}", employees.size());
     }
 
     @Test
     public void retrieveAllEmployeeData_HibernateApproach() {
-        List<Employee> employees = hibernateSpring.hibernateRetrieveAllData(Employee.class);
+        List<Employee> employees = dataQueries.getAllEntitiesHibernate(Employee.class);
         log.info("#Employees: {}", employees.size());
     }
 }

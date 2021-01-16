@@ -1,6 +1,6 @@
 package com.springboot.webapp.controllers;
 
-import com.springboot.hcrud.spring.HibernateService;
+import com.springboot.hcrud.repository.DataQueries;
 import com.springboot.hcrud.data.PreFilledFormAttributes;
 import com.springboot.hcrud.data.Student;
 import org.slf4j.Logger;
@@ -25,12 +25,12 @@ public class StudentController {
 
     private final Student student;
     private final PreFilledFormAttributes formAttributes;
-    private final HibernateService service;
+    private final DataQueries dataQueries;
 
-    public StudentController(Student student, PreFilledFormAttributes formAttributes, HibernateService service) {
+    public StudentController(Student student, PreFilledFormAttributes formAttributes, DataQueries dataQueries) {
         this.student = student;
         this.formAttributes = formAttributes;
-        this.service = service;
+        this.dataQueries = dataQueries;
     }
 
     @InitBinder
@@ -57,7 +57,7 @@ public class StudentController {
             return "student-form";
         } else {
             model.addAttribute("student", theStudent);
-            service.hibernateInsertEntity(theStudent, Student.class);
+            dataQueries.insertEntityHibernate(theStudent, Student.class);
             return "student-confirmation";
         }
     }
