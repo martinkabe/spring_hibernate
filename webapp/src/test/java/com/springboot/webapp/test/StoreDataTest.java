@@ -1,7 +1,7 @@
 package com.springboot.webapp.test;
 
-import com.springboot.hcrud.data.Employee;
-import com.springboot.hcrud.repository.DataQueries;
+import com.springboot.dao.data.Employee;
+import com.springboot.dao.repository.DataQueries;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

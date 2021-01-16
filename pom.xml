@@ -5,7 +5,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>webapp</module>
-        <module>hcrud</module>
+        <module>model</module>
     </modules>
 
     <parent>

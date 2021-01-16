@@ -1,8 +1,8 @@
 package com.springboot.webapp.controllers;
 
-import com.springboot.hcrud.repository.DataQueries;
-import com.springboot.hcrud.data.PreFilledFormAttributes;
-import com.springboot.hcrud.data.Student;
+import com.springboot.dao.repository.DataQueries;
+import com.springboot.dao.data.PreFilledFormAttributes;
+import com.springboot.dao.data.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
