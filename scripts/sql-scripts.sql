@@ -27,6 +27,6 @@ CREATE TABLE `student` (
   course_code varchar(10),
   country_name varchar(50),
   language_name varchar(50),
-  os_name varchar(20),
+  os_name varchar(50),
   PRIMARY KEY (`student_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
