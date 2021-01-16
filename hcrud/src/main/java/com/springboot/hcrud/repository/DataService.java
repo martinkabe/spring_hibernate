@@ -24,13 +24,15 @@ public class DataService implements DataQueries {
     private final JdbcTemplate jdbcTemplate;
     private final MetadataSources metadataSources;
     private final EntityManagerFactory emf;
+    private final EmployeeJpaRepository employeeJpaRepository;
 
     public DataService(JdbcTemplate jdbcTemplate,
                        MetadataSources metadataSources,
-                       EntityManagerFactory emf) {
+                       EntityManagerFactory emf, EmployeeJpaRepository employeeJpaRepository) {
         this.jdbcTemplate = jdbcTemplate;
         this.metadataSources = metadataSources;
         this.emf = emf;
+        this.employeeJpaRepository = employeeJpaRepository;
     }
 
     @Override
@@ -75,6 +77,11 @@ public class DataService implements DataQueries {
         List<Employee> employees = query.getResultList();
         em.close();
         return employees;
+    }
+
+    @Override
+    public List<Employee> getEmployeesJpa() {
+        return employeeJpaRepository.findAll();
     }
 
     @Override

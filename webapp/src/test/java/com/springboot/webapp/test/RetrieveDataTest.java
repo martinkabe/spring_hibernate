@@ -25,4 +25,10 @@ public class RetrieveDataTest {
         List<Employee> employees = dataQueries.getAllEntitiesHibernate(Employee.class);
         log.info("#Employees: {}", employees.size());
     }
+
+    @Test
+    public void retrieveAllEmployeeData_JpaApproach() {
+        List<Employee> employees = dataQueries.getEmployeesJpa();
+        log.info("#Employees: {}", employees.size());
+    }
 }

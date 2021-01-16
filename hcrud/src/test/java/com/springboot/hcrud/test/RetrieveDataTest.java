@@ -83,7 +83,7 @@ public class RetrieveDataTest {
 
     @Test
     public void retrieveAllEmployeeData_HibernateApproach() {
-        List<Employee> employees = dataQueries.getAllEntitiesHibernate(Employee.class);
+        List<Employee> employees = dataQueries.getEmployeesJpa();
         log.info("#Employees: {}", employees.size());
     }
 }

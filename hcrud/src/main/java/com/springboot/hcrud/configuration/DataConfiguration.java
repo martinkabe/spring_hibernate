@@ -7,6 +7,7 @@ import com.springboot.hcrud.data.PreFilledFormAttributes;
 import com.springboot.hcrud.data.Student;
 import com.springboot.hcrud.repository.DataQueries;
 import com.springboot.hcrud.repository.DataService;
+import com.springboot.hcrud.repository.EmployeeJpaRepository;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.service.ServiceRegistry;
@@ -37,8 +38,9 @@ public class DataConfiguration {
     @Bean
     public DataQueries dataQueries(JdbcTemplate jdbcTemplate,
                                    MetadataSources metadataSources,
-                                   EntityManagerFactory entityManagerFactory) {
-        return new DataService(jdbcTemplate, metadataSources, entityManagerFactory);
+                                   EntityManagerFactory entityManagerFactory,
+                                   EmployeeJpaRepository employeeJpaRepository) {
+        return new DataService(jdbcTemplate, metadataSources, entityManagerFactory, employeeJpaRepository);
     }
 
     @Bean
