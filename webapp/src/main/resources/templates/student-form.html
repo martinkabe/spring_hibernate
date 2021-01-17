@@ -4,71 +4,93 @@
     <meta charset="UTF-8">
     <title>Student Registration Form</title>
     <link rel="stylesheet" th:href="@{/css/basic.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
 <body>
 
-    <form th:action="@{/student/processForm}" th:object="${student}" method="post">
-        <table>
-            <tr>
-                <td th:class="${#fields.hasErrors('firstName')}? 'error err-font-style'">First Name (*):</td>
-                <td><input type="text" th:field="*{firstName}" autocomplete="off" placeholder="First Name"/></td>
-                <td th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
-                    th:class="${#fields.hasErrors('firstName')}? 'error err-font-style'"></td>
-            </tr>
-            <tr>
-                <td th:class="${#fields.hasErrors('lastName')}? 'error err-font-style'">Last Name (*):</td>
-                <td><input type="text" th:field="*{lastName}" autocomplete="off" placeholder="Last Name"/></td>
-                <td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
-                    th:class="${#fields.hasErrors('lastName')}? 'error err-font-style'"></td>
-            </tr>
-            <tr>
-                <td th:class="${#fields.hasErrors('age')}? 'error err-font-style'">Age (*):</td>
-                <td><input type="text" th:field="*{age}" autocomplete="off" placeholder="Age"/></td>
-                <td th:if="${#fields.hasErrors('age')}" th:errors="*{age}"
-                    th:class="${#fields.hasErrors('age')}? 'error err-font-style'"></td>
-            </tr>
-            <tr>
-                <td th:class="${#fields.hasErrors('postalCode')}? 'error err-font-style'">Postal Code (*):</td>
-                <td><input type="text" th:field="*{postalCode}" autocomplete="off" placeholder="Postal Code"/></td>
-                <td th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}"
-                    th:class="${#fields.hasErrors('postalCode')}? 'error err-font-style'"></td>
-            </tr>
-            <tr>
-                <td th:class="${#fields.hasErrors('courseCode')}? 'error err-font-style'">Course Code:</td>
-                <td><input type="text" th:field="*{courseCode}" autocomplete="off" placeholder="Course Code"/></td>
-                <td th:if="${#fields.hasErrors('courseCode')}" th:errors="*{courseCode}"
-                    th:class="${#fields.hasErrors('courseCode')}? 'error err-font-style'"></td>
-            </tr>
-            <tr>
-                <td>Country Name:</td>
-                <td>
-                    <select th:field="${student.countryName}">
-                        <option th:value="''" th:text="'-- Select Country --'"></option>
-                        <option th:each="country : ${formAttributes.country}"
-                                th:value="${country.value}"
-                                th:text="${country.key}"></option>
-                    </select>
-                </td>
-                <td>
+    <div class="container">
+        <form th:action="@{/student/processForm}" th:object="${student}" method="post">
+            <table>
+                <tr>
+                    <div class="form-group">
+                        <td th:class="${#fields.hasErrors('firstName')}? 'error err-font-style'">First Name (*):</td>
+                        <td><input type="text" class="form-control" th:field="*{firstName}" autocomplete="off" placeholder="First Name"/></td>
+                        <td th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+                            th:class="${#fields.hasErrors('firstName')}? 'error err-font-style'"></td>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="form-group">
+                        <td th:class="${#fields.hasErrors('lastName')}? 'error err-font-style'">Last Name (*):</td>
+                        <td><input type="text" th:field="*{lastName}" autocomplete="off" placeholder="Last Name"/></td>
+                        <td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                            th:class="${#fields.hasErrors('lastName')}? 'error err-font-style'"></td>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="form-group">
+                        <td th:class="${#fields.hasErrors('age')}? 'error err-font-style'">Age (*):</td>
+                        <td><input type="text" th:field="*{age}" autocomplete="off" placeholder="Age"/></td>
+                        <td th:if="${#fields.hasErrors('age')}" th:errors="*{age}"
+                            th:class="${#fields.hasErrors('age')}? 'error err-font-style'"></td>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="form-group">
+                        <td th:class="${#fields.hasErrors('postalCode')}? 'error err-font-style'">Postal Code (*):</td>
+                        <td><input type="text" th:field="*{postalCode}" autocomplete="off" placeholder="Postal Code"/></td>
+                        <td th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}"
+                            th:class="${#fields.hasErrors('postalCode')}? 'error err-font-style'"></td>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="form-group">
+                        <td th:class="${#fields.hasErrors('courseCode')}? 'error err-font-style'">Course Code:</td>
+                        <td><input type="text" th:field="*{courseCode}" autocomplete="off" placeholder="Course Code"/></td>
+                        <td th:if="${#fields.hasErrors('courseCode')}" th:errors="*{courseCode}"
+                            th:class="${#fields.hasErrors('courseCode')}? 'error err-font-style'"></td>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="form-group">
+                        <td>Country Name:</td>
+                        <td>
+                            <select th:field="${student.countryName}">
+                                <option th:value="''" th:text="'-- Select Country --'"></option>
+                                <option th:each="country : ${formAttributes.country}"
+                                        th:value="${country.value}"
+                                        th:text="${country.key}"></option>
+                            </select>
+                        </td>
+                    </div>
+                </tr>
+            </table>
 
-                </td>
-            </tr>
-        </table>
+            <br><br>
+            <div class="form-group">
+                <input th:type="radio" th:field="${student.languageName}"
+                       th:each="language : ${formAttributes.language}"
+                       th:value="${language.value}"
+                       th:text="${language.key}"/>
+            </div>
 
-        <br><br>
-        <input th:type="radio" th:field="${student.languageName}"
-               th:each="language : ${formAttributes.language}"
-               th:value="${language.value}"
-               th:text="${language.key}"/>
-        <br><br>
-        <input type="checkbox" th:field="${student.osName}"
-                th:each="os : ${formAttributes.operatingSystem}"
-                th:value="${os}"
-                th:text="${os}"
-                th:checked="${true}"/>
-        <br><br>
-        <input type="submit" value="submit"/>
-    </form>
+            <br><br>
+
+            <div class="form-group">
+                <input type="checkbox" th:field="${student.osName}"
+                       th:each="os : ${formAttributes.operatingSystem}"
+                       th:value="${os}"
+                       th:text="${os}"
+                       th:checked="${true}"/>
+            </div>
+
+            <br><br>
+            <input class="btn btn-default" type="submit" value="submit"/>
+        </form>
+    </div>
 
 </body>
 </html>
