@@ -10,85 +10,73 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-
+    <h1>Contact Form:</h1>
     <div class="container">
         <form th:action="@{/student/processForm}" th:object="${student}" method="post">
-            <table>
-                <tr>
-                    <div class="form-group">
-                        <td th:class="${#fields.hasErrors('firstName')}? 'error err-font-style'">First Name (*):</td>
-                        <td><input type="text" class="form-control" th:field="*{firstName}" autocomplete="off" placeholder="First Name"/></td>
-                        <td th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
-                            th:class="${#fields.hasErrors('firstName')}? 'error err-font-style'"></td>
-                    </div>
-                </tr>
-                <tr>
-                    <div class="form-group">
-                        <td th:class="${#fields.hasErrors('lastName')}? 'error err-font-style'">Last Name (*):</td>
-                        <td><input type="text" th:field="*{lastName}" autocomplete="off" placeholder="Last Name"/></td>
-                        <td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
-                            th:class="${#fields.hasErrors('lastName')}? 'error err-font-style'"></td>
-                    </div>
-                </tr>
-                <tr>
-                    <div class="form-group">
-                        <td th:class="${#fields.hasErrors('age')}? 'error err-font-style'">Age (*):</td>
-                        <td><input type="text" th:field="*{age}" autocomplete="off" placeholder="Age"/></td>
-                        <td th:if="${#fields.hasErrors('age')}" th:errors="*{age}"
-                            th:class="${#fields.hasErrors('age')}? 'error err-font-style'"></td>
-                    </div>
-                </tr>
-                <tr>
-                    <div class="form-group">
-                        <td th:class="${#fields.hasErrors('postalCode')}? 'error err-font-style'">Postal Code (*):</td>
-                        <td><input type="text" th:field="*{postalCode}" autocomplete="off" placeholder="Postal Code"/></td>
-                        <td th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}"
-                            th:class="${#fields.hasErrors('postalCode')}? 'error err-font-style'"></td>
-                    </div>
-                </tr>
-                <tr>
-                    <div class="form-group">
-                        <td th:class="${#fields.hasErrors('courseCode')}? 'error err-font-style'">Course Code:</td>
-                        <td><input type="text" th:field="*{courseCode}" autocomplete="off" placeholder="Course Code"/></td>
-                        <td th:if="${#fields.hasErrors('courseCode')}" th:errors="*{courseCode}"
-                            th:class="${#fields.hasErrors('courseCode')}? 'error err-font-style'"></td>
-                    </div>
-                </tr>
-                <tr>
-                    <div class="form-group">
-                        <td>Country Name:</td>
-                        <td>
-                            <select th:field="${student.countryName}">
-                                <option th:value="''" th:text="'-- Select Country --'"></option>
-                                <option th:each="country : ${formAttributes.country}"
-                                        th:value="${country.value}"
-                                        th:text="${country.key}"></option>
-                            </select>
-                        </td>
-                    </div>
-                </tr>
-            </table>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="firstName">First Name (*): </label>
+                <input class="form-control" type="text" th:field="*{firstName}" autocomplete="off"
+                       placeholder="First Name" id="firstName"/>
+                <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+                    th:class="${#fields.hasErrors('firstName')}? 'alert alert-danger'"></p>
+            </div>
 
-            <br><br>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="lastName">Last Name (*): </label>
+                <input class="form-control" type="text" th:field="*{lastName}" autocomplete="off" placeholder="Last Name" id="lastName"/>
+                <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                    th:class="${#fields.hasErrors('lastName')}? 'alert alert-danger'"></p>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="age">Age (*): </label>
+                <input class="form-control" type="text" th:field="*{age}" autocomplete="off" placeholder="Age" id="age"/>
+                <p th:if="${#fields.hasErrors('age')}" th:errors="*{age}"
+                    th:class="${#fields.hasErrors('age')}? 'alert alert-danger'"></p>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="postal">Postal Code (*): </label>
+                <input class="form-control" type="text" th:field="*{postalCode}" autocomplete="off" placeholder="Postal Code" id="postal"/>
+                <p th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}"
+                    th:class="${#fields.hasErrors('postalCode')}? 'alert alert-danger'"></p>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="course">Course Code: </label>
+                <input class="form-control" type="text" th:field="*{courseCode}" autocomplete="off" placeholder="Course Code" id="course"/>
+                <p th:if="${#fields.hasErrors('courseCode')}" th:errors="*{courseCode}"
+                    th:class="${#fields.hasErrors('courseCode')}? 'alert alert-danger'"></p>
+            </div>
+
             <div class="form-group">
+                <label for="country">Select Country Name: </label>
+                <select th:field="${student.countryName}" id="country">
+                    <option th:value="''" th:text="'-- Select Country --'"></option>
+                    <option th:each="country : ${formAttributes.country}"
+                            th:value="${country.value}"
+                            th:text="${country.key}"></option>
+                </select>
+            </div>
+
+            <div class="form-check">
+                <label for="language">Select Preferred Language: </label>
                 <input th:type="radio" th:field="${student.languageName}"
                        th:each="language : ${formAttributes.language}"
                        th:value="${language.value}"
-                       th:text="${language.key}"/>
+                       th:text="${language.key}" id="language"/>
             </div>
 
-            <br><br>
-
-            <div class="form-group">
-                <input type="checkbox" th:field="${student.osName}"
+            <div class="form-check">
+                <label th:class="form-check-label" for="os">Select Operating System: </label>
+                <input th:class="form-check-input" type="checkbox" th:field="${student.osName}"
                        th:each="os : ${formAttributes.operatingSystem}"
                        th:value="${os}"
                        th:text="${os}"
-                       th:checked="${true}"/>
+                       th:checked="${true}" id="os"/>
             </div>
 
-            <br><br>
-            <input class="btn btn-default" type="submit" value="submit"/>
+            <input class="btn btn-default" type="submit" value="Submit"/>
         </form>
     </div>
 
