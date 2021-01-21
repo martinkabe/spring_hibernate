@@ -30,3 +30,10 @@ CREATE TABLE `student` (
   os_name varchar(50),
   PRIMARY KEY (`student_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `user` (
+  user_id int NOT NULL AUTO_INCREMENT,
+  username varchar(255) NULL,
+  password varchar(255) NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;

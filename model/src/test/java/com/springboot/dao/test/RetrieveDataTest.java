@@ -21,7 +21,6 @@ import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
-
 @SpringBootTest
 @ActiveProfiles({ "uat", "uat-test" })
 public class RetrieveDataTest {

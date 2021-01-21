@@ -93,10 +93,9 @@ public class DataService implements DataQueries {
 
         try {
             listItems.forEach(session::save);
-
+            session.getTransaction().commit();
         } finally {
-            tr.commit();
-            session.close();
+            sessionFactory.close();
         }
     }
 
@@ -105,14 +104,14 @@ public class DataService implements DataQueries {
         // here we build the SessionFactory (Hibernate 5.4.27.Final)
         SessionFactory sessionFactory = getMetadata(entity).getSessionFactoryBuilder().build();
         Session session = sessionFactory.getCurrentSession();
-        Transaction tr = session.beginTransaction();
+        session.beginTransaction();
 
         try {
             session.save(item);
+            session.getTransaction().commit();
 
         } finally {
-            tr.commit();
-            session.close();
+            sessionFactory.close();
         }
     }
 
@@ -125,16 +124,16 @@ public class DataService implements DataQueries {
         SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build();
         Session session = sessionFactory.getCurrentSession();
 
-        Transaction tr = session.beginTransaction();
+        session.beginTransaction();
         List<T> entitiesList;
 
         try {
             Query<T> query = session.createQuery("select e from " + entityClass.getSimpleName() + " e",
                     entityClass);
             entitiesList = query.list();
+            session.getTransaction().commit();
         } finally {
-            tr.commit();
-            session.close();
+            sessionFactory.close();
         }
         return entitiesList;
     }

@@ -36,7 +36,8 @@ public class HelloWorldController {
     }
 
     @RequestMapping("/processFormVersionThree")
-    public String processFormVersionThree(@RequestParam("studentName") @NotBlank(message = "This field cannot be blank") String theName,
+    public String processFormVersionThree(@RequestParam("studentName") @NotBlank(message = "This field cannot be blank")
+                                                      String theName,
                                           Model model) {
         theName = theName.toUpperCase();
         String result = "Hey My Friend from v3! " + theName;

@@ -72,7 +72,7 @@ public class StoreDataTest {
 
     @Test
     public void saveData_Hibernate_SingleEmployee() {
-        Employee emp = new Employee("Justin", "Gilmore", "jgilmore@gmail.com");
+        Employee emp = new Employee(0,"Justin", "Gilmore", "jgilmore@gmail.com");
         dataQueries.insertEntityHibernate(emp, Employee.class);
     }
 }

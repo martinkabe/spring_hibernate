@@ -1,8 +1,8 @@
 package com.springboot.webapp.controllers;
 
-import com.springboot.dao.repository.DataQueries;
 import com.springboot.dao.data.PreFilledFormAttributes;
 import com.springboot.dao.data.Student;
+import com.springboot.dao.repository.DataQueries;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -23,7 +23,7 @@ public class StudentController {
 
     private final Logger log = LoggerFactory.getLogger(StudentController.class);
 
-    private final Student student;
+    private Student student;
     private final PreFilledFormAttributes formAttributes;
     private final DataQueries dataQueries;
 
@@ -46,7 +46,7 @@ public class StudentController {
         return "student-form";
     }
 
-    @RequestMapping(value = "/processForm", method=RequestMethod.POST)
+    @RequestMapping(value = "/processForm", method={ RequestMethod.POST })
     public String processForm(@Valid @ModelAttribute("student") Student theStudent,
                               BindingResult theBindingResult,
                               Model model) {
@@ -58,7 +58,7 @@ public class StudentController {
         } else {
             model.addAttribute("student", theStudent);
             dataQueries.insertEntityHibernate(theStudent, Student.class);
-            return "student-confirmation";
+            return "redirect:/silly/showForm";
         }
     }
 }
