@@ -23,7 +23,7 @@ public class StudentController {
 
     private final Logger log = LoggerFactory.getLogger(StudentController.class);
 
-    private Student student;
+    private final Student student;
     private final PreFilledFormAttributes formAttributes;
     private final DataQueries dataQueries;
 
@@ -58,7 +58,7 @@ public class StudentController {
         } else {
             model.addAttribute("student", theStudent);
             dataQueries.insertEntityHibernate(theStudent, Student.class);
-            return "redirect:/silly/showForm";
+            return "student-confirmation";
         }
     }
 }

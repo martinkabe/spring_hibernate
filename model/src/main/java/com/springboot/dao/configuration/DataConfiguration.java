@@ -18,11 +18,9 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -41,16 +39,6 @@ public class DataConfiguration {
                                    EntityManagerFactory entityManagerFactory,
                                    EmployeeJpaRepository employeeJpaRepository) {
         return new DataService(jdbcTemplate, metadataSources, entityManagerFactory, employeeJpaRepository);
-    }
-
-    @Bean
-    public DataSource dataSource(DbConnProperties properties) {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(properties.getDriverClassName());
-        dataSource.setUrl(properties.getUrl());
-        dataSource.setUsername(properties.getUsername());
-        dataSource.setPassword(properties.getPassword());
-        return dataSource;
     }
 
     @Bean

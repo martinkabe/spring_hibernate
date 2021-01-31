@@ -117,20 +117,17 @@ public class DataService implements DataQueries {
 
     @Override
     public <T> List<T> getAllEntitiesHibernate(Class<T> entityClass) {
-        metadataSources.addAnnotatedClass(entityClass);
-        Metadata metadata = metadataSources.buildMetadata();
-
         // here we build the SessionFactory (Hibernate 5.4.27.Final)
-        SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build();
+        SessionFactory sessionFactory = getMetadata(entityClass).getSessionFactoryBuilder().build();
         Session session = sessionFactory.getCurrentSession();
 
         session.beginTransaction();
         List<T> entitiesList;
 
         try {
-            Query<T> query = session.createQuery("select e from " + entityClass.getSimpleName() + " e",
+            Query<T> query = session.createQuery("from " + entityClass.getSimpleName(),
                     entityClass);
-            entitiesList = query.list();
+            entitiesList = query.getResultList();
             session.getTransaction().commit();
         } finally {
             sessionFactory.close();
